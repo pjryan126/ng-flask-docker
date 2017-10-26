@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  angular:
+    restart: always
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - ./project/:/home/angular/project
+    command: npm start

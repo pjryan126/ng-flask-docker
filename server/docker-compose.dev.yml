@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  flask:
+    restart: always
+    build: .
+    environment:
+      - PORT
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - ./project/:/home/flask/project
+    command: python /home/flask/project/manage.py runserver

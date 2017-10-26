@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  server:
+    restart: always
+    build: ./server
+    environment:
+      - "SERVER_PORT"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=server:${SERVER_PORT}"
+      - "traefik.frontend.rule=Host:${SERVER_FRONTEND}"
+    networks:
+    - "reverseproxy"
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    volumes:
+      - ./server/project/:/home/flask/project
+    command: python /home/flask/project/manage.py runserver
+  client:
+    restart: always
+    build: ./client
+    environment:
+      - "CLIENT_PORT"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=client:${CLIENT_PORT}"
+      - "traefik.frontend.rule=Host:${CLIENT_FRONTEND}"
+    networks:
+    - "reverseproxy"
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    volumes:
+      - ./client/project/:/home/angular/project
+    command: npm start
+
+networks:
+  reverseproxy:
+    external:
+      name: ${NETWORK}

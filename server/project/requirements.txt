@@ -1,0 +1,7 @@
+Flask
+Flask-Cors
+Flask-Migrate
+Flask-Script
+Flask-SQLAlchemy
+Flask-Testing
+gunicorn

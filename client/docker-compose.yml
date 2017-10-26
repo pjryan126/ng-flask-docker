@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  angular:
+    restart: always
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    command: npm start

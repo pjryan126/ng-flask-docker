@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  server:
+    restart: always
+    build: ./server
+    environment:
+      - "SERVER_PORT"
+    expose:
+      - "${SERVER_PORT}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=server:${SERVER_PORT}"
+      - "traefik.frontend.rule=Host:${SERVER_FRONTEND}"
+    networks:
+    - "reverseproxy"
+    command: /usr/local/bin/gunicorn -w 2 -b :${SERVER_PORT} wsgi:app
+  client:
+    restart: always
+    build: ./client
+    environment:
+      - "CLIENT_PORT"
+    expose:
+      - "${CLIENT_PORT}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=client:${CLIENT_PORT}"
+      - "traefik.frontend.rule=Host:${CLIENT_FRONTEND}"
+    networks:
+    - "reverseproxy"
+    command: npm start
+
+networks:
+  reverseproxy:
+    external:
+      name: ${NETWORK}
