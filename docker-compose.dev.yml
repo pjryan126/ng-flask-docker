@@ -31,7 +31,7 @@ services:
     ports:
       - "${CLIENT_PORT}:${CLIENT_PORT}"
     volumes:
-      - ./client/project/:/home/angular/project
+      - ./client/project/:/usr/angular/project
     command: npm start
 
 networks:
