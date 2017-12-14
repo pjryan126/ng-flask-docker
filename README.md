@@ -1,4 +1,4 @@
-# Ng-Flask
+# Ng-Flask-Docker
 
 A Docker appliance for deploying client/server web applications using Angular and Flask 
 with a preexisting Traefik reverse proxy server.
